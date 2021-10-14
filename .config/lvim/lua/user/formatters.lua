@@ -1,0 +1,14 @@
+-- Formatters
+-- lvim.lang.css.formatters = { { exe = "prettier" } }
+-- lvim.lang.javascript.formatters = { { exe = "prettier" } }
+-- lvim.lang.javascriptreact.formatters = { { exe = "prettier" } }
+-- lvim.lang.typescript.formatters = { { exe = "prettier" } }
+-- lvim.lang.typescriptreact.formatters = { { exe = "prettier" } }
+-- lvim.lang.json.formatters = { { exe = "prettier" } }
+-- lvim.lang.yaml.formatters = { { exe = "prettier" } }
+-- lvim.lang.markdown.formatters = { { exe = "prettier" } }
+-- lvim.lang.javascript.formatters = { { exe = "prettierd" } }
+-- lvim.lang.markdown.formatters = { { exe = "prettierd" } }
+-- lvim.lang.html.formatters = { { exe = "prettierd" } }
+-- lvim.lang.lua.formatters = { { exe = "stylua" } }
+-- lvim.lang.solidity.formatters = { { exe = "prettierd" } }

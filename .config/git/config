@@ -1,0 +1,162 @@
+[user]
+
+[alias]
+	aa = add -A
+	ama = !git amend-all
+	ama-no-edit = !git amend-all-no-edit
+	amn = !git amend-no-edit
+	aman = !git amend-all-no-edit
+	au  = add -u
+	bl  = blame
+	br  = branch
+	c   = commit
+	ca  = commit -a
+	cam = commit -a -m
+	ci  = commit
+	cm  = commit -m
+	co  = checkout
+	cob = checkout -b
+	cp  = cherry-pick
+	cs  = commit --squash=@
+	cf  = commit --fixup=@
+	dc  = !git discard
+	di  = diff
+	diw = diff --color-words
+	ds  = diff --staged
+	fc  = !git cf
+	fu  = !git fubar
+	fuc = !git fubar-clean
+	ir  = rebase -i
+	l   = !git last
+	mg  = merge
+	mr  = merge
+	ol  = !git oneline
+	pl  = pull
+	prc = !git pr-check
+	ps  = push
+	psf = push --force-with-lease
+	ref = reflog
+	r   = rebase
+	rb  = rebase
+	ri  = rebase -i
+	rw  = !git reword
+	sa  = stash apply
+	sc  = !git cs
+	sl  = stash list
+	sq  = !git cs
+	ss  = stash save
+	st  = !"git -c color.status=always status --long | sed -r 's/Changes to be committed.*/Staged:/' | sed -r 's/Changes not staged.*/Unstaged:/' | sed -r 's/Untracked.*/Untracked:/' | egrep -v '^\\s+\\(use.*$' | egrep '^\\s+.*$|Staged:|Unstaged:|Untracked:|nothing to commit.*'"
+# Basics
+	discard = checkout --
+	delete = !git rm $(git ls-files -d)
+	undelete = unstage --
+
+	unstage = reset HEAD
+	untrack = reset HEAD
+	undo = reset --soft
+	fubar = reset --hard
+	fubar-clean = !git reset --hard && git clean -fd
+	
+	force-pull = !git fetch ${1:-origin} $(git rev-parse --abbrev-ref HEAD) && git fu $(git rev-parse --abbrev-ref --symbolic-full-name @{u})
+	force-push = push --force-with-lease
+
+	amend = commit --amend
+	amend-all = commit -a --amend
+	amend-all-no-edit = commit -a --amend --no-edit
+	amend-no-edit = commit --amend --no-edit
+	
+	reword = commit --amend
+
+	blame-precise = blame -w -M -CC
+
+	save = stash save --keep-index
+	load = stash apply
+	pop = stash pop
+	stashes = stash list
+
+	branches = branch --list --all -vv
+	remotes = remote -vv
+
+	pickaxe-string = log -p --all -S
+	pickaxe-s = !git pickaxe-string
+	pickaxe-regex = log -p --all -G
+	pickaxe-r = !git pickaxe-regex
+	pickaxe-g = !git pickaxe-regex
+
+# Diff
+	diff-word = diff --color-words
+
+# Log
+	oneline = log --abbrev-commit --date=short --format=format:'%C(yellow)%h %C(reset)%C(cyan)%ad %C(reset)%s %C(magenta)[%an]%C(reset)'
+	current = log -1
+	last = !git oneline -8
+	latest = !git last
+
+	log-diff = log -u
+	log-graph = log --graph --oneline
+
+# Ignore
+	assume = update-index --assume-unchanged
+	ignore = !git skip
+	skip = update-index --skip-worktree
+
+	unassume = update-index --no-assume-unchanged
+	unignore = !git unskip
+	unskip = update-index --no-skip-worktree
+
+	assume-all = "!git st -s | awk {'print $2'} | xargs git assume"
+	ignore-all = !git skip-all
+	skip-all = !git st -s | awk {'print $2'} | xargs git skip
+
+	unassume-all = "!git list-assumed | xargs git update-index --no-assume-unchanged"
+	unignore-all = !git unskip-all
+	unskip-all = !cd "$(git rev-parse --show-toplevel)" && git ls-files -v | grep '^S' | awk {'print $2'} | xargs git unskip
+
+	assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+	ignored = !git skip-list
+	skipped = !git ls-files -v --full-name | grep '^S'
+
+# Recover
+	recover-stage = !"find $(git rev-parse --show-toplevel)/.git/objects/ -type f -printf '%TY-%Tm-%Td %TH:%TM %P\n' | sort -r | sed 's#/##g' | more -10"
+
+# Merge conflicts
+	conflicts = diff --name-only --diff-filter=U
+
+	ours = "!f() { git co --ours $@ && git add $@; }; f"
+	theirs = "!f() { git co --theirs $@ && git add $@; }; f"
+	
+	redo-merge = checkout -m
+
+# Pull requests
+	pr = "!f() { git fetch -fu ${2:-origin} +pull/$1/head:pr/$1 && git checkout pr/$1; }; f"
+	pr-check = "!f() { git pr $1 ${3:-origin} && git reset $(git merge-base HEAD ${3:-origin}/${2:-master}) && git add .; }; f"
+	
+	format-code = "!f() { git checkout $1 && git reset --soft $(git merge-base @ $2) && echo 'Sync your project with gradle and format the code. Do not add the formatted files to the staging area! Press enter to continue...' && read 'foo' && git reset $(git rev-list @{1} -1); }; f"
+
+	guilt = !git-guilt -w
+	guilt-merge-base = !sh -c 'git guilt $(git merge-base $0 @) @'
+
+# Utils
+	root = rev-parse --show-toplevel
+	find = !git ls-files | grep -i
+	grep-pretty = "!f() { git grep --break --heading $@ $(git rev-list --all); }; f"
+	
+	check-for-spaces = -c core.whitespace=indent-with-non-tab,trailing-space,space-before-tab,tabwidth=4 diff --check
+	check-for-tabs = -c core.whitespace=tab-in-indent,trailing-space,space-before-tab,tabwidth=4 diff --check
+
+	ls-files = ls-files
+	rev-list = rev-list
+	merge-base = merge-base
+	merge-bases = "!f() { git rev-list $1..${2:-@} | while read line ; do echo $(git log --oneline -1 $(git merge-base $1 $line)) ; done | uniq; }; f"
+
+# Workflow-Utils
+	done = !git fetch origin HEAD && git rebase -i --autosquash origin/HEAD && git rebase origin/HEAD
+
+# Typos
+	ad = add
+	comit = commit
+	dff = diff
+	dif = diff
+	statis = status
+	lats = last
+	pul = pullt

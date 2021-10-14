@@ -1,0 +1,12 @@
+-- Linters
+-- set an additional linter
+-- lvim.lang.python.linters = {
+--   {
+--     exe = "flake8",
+--     args = {}
+--   }
+-- }
+
+-- lvim.lang.dockerfile.linters = {{exe = "hadolint"}}
+-- lvim.lang.javascript.linters = { { exe = 'eslint' } }
+-- lvim.lang.dockerfile.linters = {{exe = "hadolint"}}
