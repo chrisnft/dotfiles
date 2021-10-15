@@ -12,4 +12,4 @@ export ZSH_CUSTOM=${HOME}/.config/zsh/custom
 # NPM global directory if nvm not used
 export NPM_CONFIG_PREFIX=${HOME}/.npm-global
 # PATH
-export PATH=${NPM_CONFIG_PREFIX}/bin:${XDG_BIN_HOME}:/usr/local/bin:/usr/bin:/usr/sbin:/bin
+export PATH=${NPM_CONFIG_PREFIX}/bin:${XDG_BIN_HOME}:/usr/local/bin:/usr/local/sbin/:/usr/bin:/usr/sbin:/bin
