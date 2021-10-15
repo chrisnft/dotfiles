@@ -10,5 +10,4 @@ export ZDOTDIR=${HOME}/.config/zsh
 export ZSH=${XDG_DATA_HOME}/oh-my-zsh
 export ZSH_CUSTOM=${HOME}/.config/zsh/custom
 
-
 export PATH="${XDG_BIN_HOME}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
