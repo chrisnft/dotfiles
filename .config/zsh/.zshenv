@@ -5,9 +5,11 @@ export XDG_STATE_HOME=${HOME}/.state
 export XDG_FONTS_HOME=${HOME}/.local/share/fonts
 export XDG_DOTFILES_HOME=${HOME}/.dotfiles
 export XDG_BIN_HOME=${HOME}/.local/bin
-
+# ZSH
 export ZDOTDIR=${HOME}/.config/zsh
 export ZSH=${XDG_DATA_HOME}/oh-my-zsh
 export ZSH_CUSTOM=${HOME}/.config/zsh/custom
-
-export PATH="${XDG_BIN_HOME}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+# NPM global directory if nvm not used
+export NPM_CONFIG_PREFIX=${HOME}/.npm-global
+# PATH
+export PATH="${NPM_CONFIG_PREFIX}/bin:${XDG_BIN_HOME}:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
